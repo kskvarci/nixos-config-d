@@ -20,10 +20,12 @@ stdenv.mkDerivation rec {
     glib # provides gdbus-codegen for the identity-broker DBus binding
   ];
 
-  buildInputs = [
-    glib      # glib-2.0 + gio-2.0
-    json-glib # json-glib-1.0
-    util-linux # uuid
+  # Propagated so that consumers (networkmanager-openvpn) can satisfy
+  # sso-mib.pc's Requires: glib-2.0 gio-2.0 uuid when pkg-config resolves it.
+  propagatedBuildInputs = [
+    glib
+    json-glib
+    util-linux
   ];
 
   mesonFlags = [
