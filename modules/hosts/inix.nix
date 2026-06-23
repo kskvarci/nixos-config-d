@@ -10,6 +10,7 @@
         niri-overlay
         himmelblau
         smb-mounts
+        vpn
         home-manager
         ../../hosts/inix/hardware-configuration.nix
         inputs.apple-silicon.nixosModules.default
