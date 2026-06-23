@@ -26,13 +26,18 @@
       hardware.bluetooth.powerOnBoot = true;
       services.blueman.enable        = true;
 
+      # Disable autosuspend on the btusb adapter — prevents BT mouse disconnects.
+      boot.extraModprobeConfig = ''
+        options btusb enable_autosuspend=0
+      '';
+
       # Nvidia proprietary driver — required for Wayland/niri on Turing GPUs.
       services.xserver.videoDrivers = [ "nvidia" ];
       hardware.nvidia = {
         modesetting.enable       = true;
         open                     = false;
         nvidiaSettings           = true;
-        powerManagement.enable   = false;
+        powerManagement.enable   = true;
       };
 
       hardware.graphics = {
