@@ -61,14 +61,20 @@
               hash   = "sha256-zX2jo3vyTBQrJvPjpIjoPiji/Xz0g5AB3s3PxJErwI0=";
             };
 
-            # Re-apply the Nix path-fixup patch against the entra_auth source,
-            # wiring in our patched openvpn and the system kmod.
-            patches = [
-              (prev.replaceVars ../pkgs/patches/nm-openvpn-entra-fix-paths.patch {
-                openvpn = final.openvpn;
-                kmod    = prev.kmod;
-              })
-            ];
+            # Re-apply the Nix path-fixup inline, wiring in our patched openvpn
+            # and the system kmod. Uses postPatch to avoid fragile patch line counts.
+            patches = [];
+            postPatch = ''
+              substituteInPlace properties/nm-openvpn-editor.c \
+                --replace-fail '"/usr/sbin/openvpn",' '"${final.openvpn}/bin/openvpn",'
+              sed -i '/"\/sbin\/openvpn",/d' properties/nm-openvpn-editor.c
+
+              substituteInPlace src/nm-openvpn-service.c \
+                --replace-fail '"/usr/sbin/openvpn",' '"${final.openvpn}/bin/openvpn",' \
+                --replace-fail '"/sbin/modprobe tun"' '"${prev.kmod}/bin/modprobe tun"'
+              sed -i '/"\/sbin\/openvpn",/d;/"\/usr\/local\/sbin\/openvpn",/d' \
+                src/nm-openvpn-service.c
+            '';
 
             # GitLab archive has configure.ac but no generated configure script.
             nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
