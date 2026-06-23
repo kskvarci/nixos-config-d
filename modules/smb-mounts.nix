@@ -20,6 +20,9 @@
       "vers=3.0"
       "nofail"
       "_netdev"
+      "noauto"
+      "x-systemd.automount"
+      "x-systemd.idle-timeout=60"
     ];
 
     mkSmbMount = share: {

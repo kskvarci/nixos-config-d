@@ -28,6 +28,7 @@
       yazi
       gh
       go
+      nodejs
       nh
 
       # VPN — NM secret agent needed for OpenConnect auth-dialog / sso-mib flow
