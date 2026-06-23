@@ -9,9 +9,7 @@
       shellAliases.v       = "nvim";
       functions.vpn = {
         description = "Connect to Microsoft corp VPN (GlobalProtect + sso-mib)";
-        body = ''
-          bash ~/vpn-connect.sh
-        '';
+        body = "vpn-connect";
       };
       functions.nos = {
         description = "Sync config bidirectionally, then switch";
