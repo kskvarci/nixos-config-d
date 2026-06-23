@@ -10,7 +10,6 @@
         niri-overlay
         himmelblau
         smb-mounts
-        cachix
         home-manager
         ../../hosts/inix/hardware-configuration.nix
         inputs.apple-silicon.nixosModules.default

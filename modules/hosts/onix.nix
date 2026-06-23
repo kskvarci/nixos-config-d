@@ -10,7 +10,6 @@
         niri-overlay
         himmelblau
         smb-mounts
-        cachix
         home-manager
         ../../hosts/onix/hardware-configuration.nix
       ];
