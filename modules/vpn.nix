@@ -46,5 +46,9 @@
     ];
 
     networking.networkmanager.plugins = [ pkgs.networkmanager-openconnect ];
+
+    # opensc provides opensc-pkcs11.so for YubiKey PIV slot 9A cert auth
+    # (Microsoft YubiKey CA 2 cert required by GlobalProtect alongside SAML)
+    environment.systemPackages = [ pkgs.opensc ];
   };
 }
