@@ -8,6 +8,7 @@ environment {
 
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "noctalia"
+spawn-at-startup "nm-applet" "--indicator"
 
 input {
   keyboard {

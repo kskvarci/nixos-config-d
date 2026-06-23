@@ -29,6 +29,9 @@
       gh
       go
       nh
+
+      # VPN — NM secret agent needed for OpenConnect auth-dialog / sso-mib flow
+      network-manager-applet
     ];
   };
 }
