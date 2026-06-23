@@ -48,7 +48,22 @@
     networking.networkmanager.plugins = [ pkgs.networkmanager-openconnect ];
 
     # opensc provides opensc-pkcs11.so for YubiKey PIV slot 9A cert auth
-    # (Microsoft YubiKey CA 2 cert required by GlobalProtect alongside SAML)
     environment.systemPackages = [ pkgs.opensc ];
+
+    # Clear cached VPN cookie on disconnect so sso-mib acquires a fresh one
+    # on every reconnect (PRT SSO cookies are short-lived).
+    networking.networkmanager.dispatcherScripts = [{
+      source = pkgs.writeText "clear-vpn-cookie" ''
+        #!/bin/sh
+        CONN_ID="$2"
+        ACTION="$1"
+        if [ "$ACTION" = "vpn-down" ] || [ "$ACTION" = "connectivity-change" ]; then
+          nmcli --fields vpn.secrets connection show "$CONN_ID" 2>/dev/null | \
+            grep -q "gateway-cookies" && \
+            nmcli connection modify "$CONN_ID" vpn.secrets "" 2>/dev/null
+        fi
+      '';
+      type = "basic";
+    }];
   };
 }
