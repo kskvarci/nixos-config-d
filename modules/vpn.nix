@@ -37,9 +37,11 @@
 
             patches = [ ../pkgs/patches/openvpn-1622-tls-record-buffers.patch ];
 
-            # Git snapshot has configure.ac but no generated configure script.
+            # Git snapshot has configure.ac but no generated configure script,
+            # and no pre-built man pages (needs rst2man from docutils).
             nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
               prev.autoreconfHook
+              prev.python3Packages.docutils
             ];
           });
 
