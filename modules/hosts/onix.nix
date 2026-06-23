@@ -10,6 +10,7 @@
         niri-overlay
         himmelblau
         smb-mounts
+        vpn
         home-manager
         ../../hosts/onix/hardware-configuration.nix
       ];
