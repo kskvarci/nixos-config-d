@@ -7,6 +7,12 @@
       interactiveShellInit = "fastfetch --logo small";
       shellInit            = "set -gx NH_FLAKE $HOME/nixos-config-d";
       shellAliases.v       = "nvim";
+      functions.vpn = {
+        description = "Connect to Microsoft corp VPN (GlobalProtect + sso-mib)";
+        body = ''
+          bash ~/vpn-connect.sh
+        '';
+      };
       functions.nos = {
         description = "Sync config bidirectionally, then switch";
         body = ''
