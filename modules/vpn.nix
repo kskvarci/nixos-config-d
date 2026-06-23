@@ -76,9 +76,12 @@
                 src/nm-openvpn-service.c
             '';
 
-            # GitLab archive has configure.ac but no generated configure script.
+            # GitLab archive has configure.ac but no generated configure script,
+            # and UI files need gtk4-builder-tool to convert GTK3→GTK4 at build
+            # time (release tarballs ship them pre-converted).
             nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
               prev.autoreconfHook
+              prev.gtk4
             ];
 
             buildInputs    = old.buildInputs ++ [ sso-mib ];
