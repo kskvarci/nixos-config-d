@@ -15,7 +15,9 @@
           margin_ends        = 0.0;
           padding            = 11;
           radius             = 13;
-          radius_bottom_left  = 0;
+          radius_top_left    = 0;
+	  radius_top_right   = 0;
+	  radius_bottom_left  = 0;
           radius_bottom_right = 0;
           start              = [ "clock" "wallpaper" "workspaces" "weather" "cpu" ];
           thickness          = 28;
