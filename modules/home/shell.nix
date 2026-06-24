@@ -21,6 +21,11 @@
             git -C $NH_FLAKE pull --rebase
             or return
           end
+          git -C $NH_FLAKE diff --quiet HEAD
+          or begin
+            git -C $NH_FLAKE commit -am "config: update"
+            or return
+          end
           nh os switch $argv
           or return
           set ahead (git -C $NH_FLAKE rev-list @{u}..HEAD --count)
@@ -56,6 +61,23 @@
       plugins = [
         { name = "tide"; src = pkgs.fishPlugins.tide.src; }
       ];
+    };
+
+    programs.yazi = {
+      enable = true;
+      shellWrapperName = "yy"; # keep "yy"; "y" is already a custom fish function above
+      settings = {
+        opener = {
+          browser = [
+            { run = "brave %*";   desc = "Brave";   orphan = true; }
+            { run = "firefox %*"; desc = "Firefox"; orphan = true; }
+          ];
+        };
+        open.rules = [
+          { mime = "text/html";             use = "browser"; }
+          { mime = "application/xhtml+xml"; use = "browser"; }
+        ];
+      };
     };
   };
 }
