@@ -22,13 +22,16 @@
       ratune
       easyeffects
 
+      # Languages / runtimes
+      go
+      nodejs
+      python3
+
       # CLI
       fastfetch
       neovim
       yazi
       gh
-      go
-      nodejs
       nh
       azure-cli
 
