@@ -22,7 +22,15 @@
       };
     };
 
-    # Prevent himmelblau from prompting Hello PIN on sudo.
+    # Prevent himmelblau from intercepting local login / passwd / sudo.
+    security.pam.services.login.rules.auth.himmelblau.enable    = false;
+    security.pam.services.login.rules.account.himmelblau.enable = false;
+    security.pam.services.login.rules.session.himmelblau.enable = false;
+
+    security.pam.services.passwd.rules.auth.himmelblau.enable    = false;
+    security.pam.services.passwd.rules.account.himmelblau.enable = false;
+    security.pam.services.passwd.rules.session.himmelblau.enable = false;
+
     security.pam.services.sudo.rules.auth.himmelblau.enable    = false;
     security.pam.services.sudo.rules.account.himmelblau.enable = false;
     security.pam.services.sudo.rules.session.himmelblau.enable = false;
