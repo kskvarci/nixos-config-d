@@ -30,6 +30,7 @@
       go
       nodejs
       nh
+      azure-cli
 
       # VPN — NM secret agent needed for OpenConnect auth-dialog / sso-mib flow
       networkmanagerapplet
