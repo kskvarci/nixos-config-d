@@ -77,18 +77,18 @@ in
     networking.networkmanager.dispatcherScripts = [{
       source = pkgs.writeText "clear-vpn-cookie" ''
         #!/bin/sh
-        CONN_ID="$2"
-        ACTION="$1"
+        IFACE="$1"
+        ACTION="$2"
         if [ "$ACTION" = "vpn-up" ]; then
           # The GP gateway pushes 192.168.0.0/16 via tun0 (metric 50), which beats
           # the local LAN kernel route (metric 100) and breaks LAN connectivity.
           # Remove it so local 192.168.x.x traffic stays on the LAN interface.
-          ${pkgs.iproute2}/bin/ip route del 192.168.0.0/16 dev tun0 2>/dev/null || true
+          ${pkgs.iproute2}/bin/ip route del 192.168.0.0/16 dev "$IFACE" 2>/dev/null || true
         fi
         if [ "$ACTION" = "vpn-down" ] || [ "$ACTION" = "connectivity-change" ]; then
-          nmcli --fields vpn.secrets connection show "$CONN_ID" 2>/dev/null | \
+          nmcli --fields vpn.secrets connection show "$CONNECTION_ID" 2>/dev/null | \
             grep -q "gateway-cookies" && \
-            nmcli connection modify "$CONN_ID" vpn.secrets "" 2>/dev/null
+            nmcli connection modify "$CONNECTION_ID" vpn.secrets "" 2>/dev/null
         fi
       '';
       type = "basic";
