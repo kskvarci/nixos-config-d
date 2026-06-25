@@ -11,7 +11,7 @@
         description = "Manage Microsoft corp VPN (up/down)";
         body = ''
           switch $argv[1]
-            case up ''
+            case up
               vpn-connect
             case down
               nmcli connection down MSFT-CorpVPN
