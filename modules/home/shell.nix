@@ -8,8 +8,17 @@
       shellInit            = "set -gx NH_FLAKE $HOME/nixos-config-d";
       shellAliases.v       = "nvim";
       functions.vpn = {
-        description = "Connect to Microsoft corp VPN (GlobalProtect + sso-mib)";
-        body = "vpn-connect";
+        description = "Manage Microsoft corp VPN (up/down)";
+        body = ''
+          switch $argv[1]
+            case up ''
+              vpn-connect
+            case down
+              nmcli connection down MSFT-CorpVPN
+            case '*'
+              echo "Usage: vpn [up|down]"
+          end
+        '';
       };
       functions.nos = {
         description = "Sync config bidirectionally, then switch";
