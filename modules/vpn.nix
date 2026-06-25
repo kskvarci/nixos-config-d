@@ -66,7 +66,8 @@ in
           con-name "MSFT-CorpVPN" \
           -- \
           vpn.data "gateway=redmond.msftvpn-alt.ras.microsoft.com, protocol=gp, entra_conditional_access=yes" \
-          ipv4.routes "${vpnRoutes}"
+          ipv4.routes "${vpnRoutes}" \
+          ipv4.never-default yes
         nmcli connection up MSFT-CorpVPN
       '')
     ];
