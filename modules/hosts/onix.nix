@@ -56,6 +56,17 @@
       # the niri module itself also uses the patched package).
       programs.niri.package = pkgs.niri.overrideAttrs (_: { doCheck = false; });
 
+      # Deploy EasyEffects config for Hifiman Sundara / JDS Atom DAC.
+      # Copied (not symlinked) so EasyEffects can write runtime state between rebuilds.
+      home-manager.users.kskvarci.home.activation.easyeffectsConfig =
+        inputs.home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          mkdir -p "$HOME/.config/easyeffects/db"
+          for f in easyeffectsrc equalizerrc; do
+            install -m644 ${../../hosts/onix/easyeffects}/$f \
+              "$HOME/.config/easyeffects/db/$f"
+          done
+        '';
+
       system.stateVersion = "25.11";
     };
   };
