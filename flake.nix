@@ -22,6 +22,7 @@
     };
 
     niri.url = "github:sodiboo/niri-flake";
+    
     himmelblau.url = "github:himmelblau-idm/himmelblau/3.1.6";
 
     noctalia = {
