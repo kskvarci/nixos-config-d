@@ -45,16 +45,24 @@
       extraGroups     = [ "wheel" "networkmanager" "video" ];
       initialPassword = "changeme";
       shell           = pkgs.fish;
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGdgPO8UneAunK8wqM8DoMlLLcomVLgkjP2wb6aneqhw inix"
+      ];
     };
+
+    # Allow root SSH with key (for initial deploys and emergencies)
+    users.users.root.openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGdgPO8UneAunK8wqM8DoMlLLcomVLgkjP2wb6aneqhw inix"
+    ];
 
     programs.fish.enable = true;
 
-    # SSH hardened defaults (hosts can override with mkForce or higher priority)
+    # SSH — password auth enabled, root login allowed for initial setup
     services.openssh = {
       enable   = true;
       settings = {
-        PasswordAuthentication = lib.mkDefault false;
-        PermitRootLogin        = lib.mkDefault "no";
+        PasswordAuthentication = lib.mkDefault true;
+        PermitRootLogin        = lib.mkDefault "yes";
       };
     };
   };

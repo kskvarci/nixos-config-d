@@ -8,12 +8,8 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  # Boot loader (GRUB, UEFI)
-  boot.loader.grub = {
-    enable     = true;
-    device     = "nodev";
-    efiSupport = true;
-  };
+  # Boot loader (systemd-boot, UEFI)
+  boot.loader.systemd-boot.enable     = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint     = "/boot/efi";
 
@@ -43,5 +39,5 @@
   services.fstrim.enable   = true;
 
   nixpkgs.hostPlatform = "x86_64-linux";
-  system.stateVersion  = "24.11";
+  system.stateVersion  = "25.05";
 }
