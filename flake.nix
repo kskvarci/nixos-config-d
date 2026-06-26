@@ -25,10 +25,7 @@
     
     himmelblau.url = "github:himmelblau-idm/himmelblau/3.1.6";
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
   };
 
   outputs = { flake-parts, ... }@inputs:
