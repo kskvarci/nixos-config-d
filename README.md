@@ -1,54 +1,96 @@
 # nixos-config
 
-NixOS configurations for `inix` (Apple Silicon M-series) and `onix` (AMD/Nvidia x86_64).
+Unified NixOS configurations for three machines:
+
+| Host | Hardware | Role |
+|------|----------|------|
+| **inix** | Apple Silicon (M-series) | Desktop — niri Wayland compositor |
+| **onix** | AMD Ryzen / Nvidia RTX 2070 | Desktop — niri Wayland compositor |
+| **enix** | Intel i9-13900H mini PC | Home server — containerized services |
 
 ## Architecture
 
-This repo follows the [dendritic pattern](https://github.com/mightyiam/dendritic): **every `.nix` file (except `flake.nix`) is a top-level [flake-parts](https://flake.parts) module**, auto-imported via [`import-tree`](https://github.com/vic/import-tree). File paths convey the feature name, not the expression type.
+This repo follows the [dendritic pattern](https://github.com/mightyiam/dendritic): **every `.nix` file under `modules/` is a top-level [flake-parts](https://flake.parts) module**, auto-imported via [`import-tree`](https://github.com/vic/import-tree).
+
+Host definitions are pure **composition files** — they select which named modules to include, with no inline configuration.
 
 ### Top-level option namespaces
 
 | Namespace | Type | Purpose |
 |-----------|------|---------|
-| `nixos.modules.<name>` | `deferredModule` | NixOS feature modules, merged by the module system |
-| `hm.modules.<name>` | `deferredModule` | home-manager feature modules, merged and bridged into NixOS via `home-manager.nix` |
-| `nixos.configurations.<host>` | submodule | Per-host assembly — declares `system` and a `module` that imports the desired `nixos.modules.*` |
+| `nixos.modules.<name>` | `deferredModule` | Named NixOS feature modules |
+| `hm.modules.<name>` | `deferredModule` | Named home-manager feature modules |
+| `nixos.configurations.<host>` | submodule | Per-host assembly — declares `system` + `modules` list |
 
-### Module files
+### Directory layout
 
 ```
+flake.nix                          # Inputs + import-tree entry point
 modules/
-  nixos.nix           # Declares nixos.modules / nixos.configurations options; builds flake.nixosConfigurations
-  home-manager.nix    # Declares hm.modules option; wires all hm.modules into NixOS via home-manager.sharedModules
-
-  base.nix            # nixos.modules.base   — core system settings shared by all hosts
-  desktop.nix         # nixos.modules.desktop — Wayland/niri compositor, PipeWire, fonts, portals
-  himmelblau.nix      # nixos.modules.himmelblau — Entra ID / Azure AD auth
-  niri-overlay.nix    # nixos.modules.niri-overlay — niri package overlay
-  smb-mounts.nix      # nixos.modules.smb-mounts — SMB/CIFS network mounts
-  vpn.nix             # nixos.modules.vpn — OpenConnect VPN
-
+  nixos.nix                        # Schema: nixos.modules + nixos.configurations → flake.nixosConfigurations
+  core/
+    base.nix                       # Shared: locale, timezone, nix settings, user, SSH
+    home-manager.nix               # Wires hm.modules.* into NixOS via home-manager.sharedModules
+    networking-desktop.nix         # NetworkManager (desktops)
+    networking-server.nix          # systemd-networkd + static IP + firewall (enix)
+    server-shell.nix               # CLI tools for the server
+    server-users.nix               # Server-specific user/group extensions
+  desktop/
+    desktop.nix                    # niri, greetd, PipeWire, fonts, portals
+    easyeffects.nix                # Audio EQ preset (onix)
+    himmelblau.nix                 # Entra ID / Azure AD authentication
+    niri-overlay.nix               # niri test-skip overlay
+    vpn.nix                        # OpenConnect GlobalProtect VPN
+  hardware/
+    apple-silicon.nix              # Asahi Linux, firmware, DRM (inix)
+    bluetooth.nix                  # Bluetooth + btusb fix (onix)
+    coral.nix                      # Google Coral TPU (enix)
+    intel-gpu.nix                  # Intel QSV transcoding (enix)
+    nvidia.nix                     # Nvidia proprietary driver (onix)
+    onix-boot.nix                  # AMD boot + microcode (onix)
+  storage/
+    enix-filesystems.nix           # LVM, data disks, swap (enix)
+    smb-mounts.nix                 # CIFS network mounts (desktops)
+  services/                        # Containerized services (enix)
+    borgbackup.nix, frigate.nix, home-assistant.nix, immich.nix,
+    jellyfin.nix, media-downloads.nix, miniflux.nix, mosquitto.nix,
+    navidrome.nix, omada.nix, podman.nix, prowlarr.nix, radarr.nix,
+    samba.nix, sonarr.nix, ssh.nix, syncthing.nix, bazarr.nix
+  secrets/
+    secrets.nix                    # sops-nix wiring
+  home/                            # home-manager user modules (desktops only)
+    base.nix, niri.nix, noctalia.nix, packages.nix, shell.nix, terminal.nix
   hosts/
-    inix.nix          # nixos.configurations.inix — Apple Silicon host assembly
-    onix.nix          # nixos.configurations.onix — AMD/Nvidia host assembly
-
-  home/
-    base.nix          # hm.modules.base      — HM identity (username, homeDirectory, stateVersion)
-    packages.nix      # hm.modules.packages  — user packages (home.packages)
-    shell.nix         # hm.modules.shell     — shell config (fish, etc.)
-    terminal.nix      # hm.modules.terminal  — terminal emulator config
-    niri.nix          # hm.modules.niri      — niri window manager user config
-    noctalia.nix      # hm.modules.noctalia  — Noctalia theme
+    inix.nix                       # Host composition — Apple Silicon desktop
+    onix.nix                       # Host composition — AMD/Nvidia desktop
+    enix.nix                       # Host composition — home server
+hosts/                             # Per-host hardware-configuration.nix
+  inix/, onix/, enix/
+pkgs/                              # Custom package derivations
+secrets/                           # Encrypted secrets (sops)
+firmware/                          # Asahi peripheral firmware blobs
 ```
 
 ### How it fits together
 
-1. `flake.nix` calls `flake-parts.lib.mkFlake` and passes `import-tree ./modules` as the top-level module — every file under `modules/` is automatically imported.
-2. Each file contributes to `nixos.modules.*` or `hm.modules.*` via the top-level module system's `deferredModule` merging.
-3. Host files (`modules/hosts/*.nix`) declare a `nixos.configurations.<host>` whose inner `module` lists the desired `nixos.modules.*` entries in its `imports`.
-4. `home-manager.nix` collects all `hm.modules.*` values and passes them as `home-manager.sharedModules` inside `nixos.modules.home-manager`, which hosts import by name.
+1. `flake.nix` calls `flake-parts.lib.mkFlake` with `import-tree ./modules` — every `.nix` file under `modules/` is automatically imported as a flake-parts module.
+2. Each file registers named modules via `nixos.modules.<name>` or `hm.modules.<name>`.
+3. Host files (`modules/hosts/*.nix`) declare `nixos.configurations.<host>` with a `modules` list referencing the desired named modules.
+4. `nixos.nix` builds `flake.nixosConfigurations` from those declarations, auto-injecting `networking.hostName`.
+5. `home-manager.nix` collects all `hm.modules.*` and passes them as `sharedModules` — hosts that include `config.nixos.modules.home-manager` get all HM config automatically.
 
 ### Adding a new feature
 
-- **System-wide (NixOS):** create `modules/<feature>.nix` that sets `nixos.modules.<feature> = { pkgs, ... }: { ... };`, then add it to the desired host's `imports` list.
-- **User/home:** create `modules/home/<feature>.nix` that sets `hm.modules.<feature> = { pkgs, ... }: { ... };` — it is automatically included for all hosts via `sharedModules`.
+- **System-wide (NixOS):** Create `modules/<domain>/<feature>.nix` that sets `nixos.modules.<feature> = { ... }: { ... };`, then add `config.nixos.modules.<feature>` to the desired host's `modules` list.
+- **User/home:** Create `modules/home/<feature>.nix` that sets `hm.modules.<feature> = { ... }: { ... };` — automatically included for all desktop hosts via `sharedModules`.
+- **New host:** Create `modules/hosts/<name>.nix` with a `nixos.configurations.<name>` that lists the modules it needs, plus a `hosts/<name>/hardware-configuration.nix`.
+
+### Deploying
+
+```bash
+# Desktop (from the machine itself)
+nh os switch          # or: nixos-rebuild switch --flake .#inix
+
+# Server (remote)
+nixos-rebuild switch --flake .#enix --target-host enix --use-remote-sudo
+```
