@@ -15,7 +15,7 @@ in
   nixos.modules.vpn = { pkgs, ... }: {
     nixpkgs.overlays = [
       (final: prev: {
-        sso-mib = prev.callPackage ../pkgs/sso-mib.nix {};
+        sso-mib = prev.callPackage ../../pkgs/sso-mib.nix {};
 
         networkmanager-openconnect = prev.networkmanager-openconnect.overrideAttrs (old: {
           # main branch has --with-sso-mib; 1.2.10 release tarball predates it
