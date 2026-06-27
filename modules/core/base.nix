@@ -40,7 +40,7 @@
     environment.systemPackages = [
       pkgs.vim
       pkgs.git
-      inputs.deploy-rs.packages.${pkgs.system}.deploy-rs
+      inputs.deploy-rs.packages.${pkgs.stdenv.hostPlatform.system}.deploy-rs
     ];
 
     # Primary user account
