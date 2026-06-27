@@ -44,7 +44,7 @@ in
     };
 
     onix = {
-      hostname = "onix";
+      hostname = "192.168.1.53";
       sshUser = "kskvarci";
       remoteBuild = true;
       profiles.system = {

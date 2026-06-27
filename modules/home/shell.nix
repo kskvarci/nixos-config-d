@@ -27,6 +27,10 @@
             case 0
               # Local rebuild
               nh os switch $NH_FLAKE
+              # Check if local reboot is needed
+              if test (readlink /run/current-system) != (readlink /run/booted-system)
+                echo "⚠️  Reboot needed (kernel or system changed)"
+              end
             case '*'
               # Remote deploy via deploy-rs
               for target in $argv
@@ -35,6 +39,26 @@
                     deploy --skip-checks $NH_FLAKE
                   case '*'
                     deploy --skip-checks $NH_FLAKE"#$target"
+                end
+                # Check if remote reboot is needed
+                if test $status -eq 0
+                  set -l host ""
+                  switch $target
+                    case enix
+                      set host "192.168.1.34"
+                    case onix
+                      set host "192.168.1.53"
+                    case inix
+                      set host "localhost"
+                  end
+                  if test -n "$host"
+                    set -l result (ssh kskvarci@$host 'test "$(readlink /run/current-system)" != "$(readlink /run/booted-system)" && echo reboot' 2>/dev/null)
+                    if test "$result" = "reboot"
+                      echo "⚠️  $target: Reboot needed (kernel or system changed)"
+                    else
+                      echo "✅ $target: No reboot needed"
+                    end
+                  end
                 end
               end
           end
