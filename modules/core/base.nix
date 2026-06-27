@@ -4,7 +4,7 @@
 # primary user account, fish shell, and SSH.
 { ... }:
 {
-  nixos.modules.base = { pkgs, lib, ... }: {
+  nixos.modules.base = { pkgs, lib, inputs, ... }: {
     # Allow unfree packages (firmware, drivers, etc.)
     nixpkgs.config.allowUnfree = true;
 
@@ -37,7 +37,11 @@
     i18n.defaultLocale = "en_US.UTF-8";
 
     # Minimal system packages available everywhere
-    environment.systemPackages = [ pkgs.vim pkgs.git ];
+    environment.systemPackages = [
+      pkgs.vim
+      pkgs.git
+      inputs.deploy-rs.packages.${pkgs.system}.deploy-rs
+    ];
 
     # Primary user account
     users.users.kskvarci = {
