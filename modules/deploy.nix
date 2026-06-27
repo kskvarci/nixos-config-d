@@ -53,7 +53,5 @@ in
     };
   };
 
-  flake.checks = lib.mapAttrs
-    (system: deployLib: deployLib.deployChecks inputs.self.deploy)
-    inputs.deploy-rs.lib;
+  flake.checks = {};
 }

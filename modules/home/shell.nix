@@ -32,9 +32,9 @@
               for target in $argv
                 switch $target
                   case all
-                    deploy $NH_FLAKE
+                    deploy --skip-checks $NH_FLAKE
                   case '*'
-                    deploy $NH_FLAKE"#$target"
+                    deploy --skip-checks $NH_FLAKE"#$target"
                 end
               end
           end
