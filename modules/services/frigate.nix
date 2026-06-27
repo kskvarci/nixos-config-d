@@ -21,10 +21,8 @@
         "--privileged"
         "--shm-size=200m"
         "--device=/dev/dri:/dev/dri"
+        "--device=/dev/apex_0:/dev/apex_0"
         "--mount=type=tmpfs,target=/tmp/cache,tmpfs-size=1000000000"
-        # Coral TPU — uncomment when device is connected:
-        # "--device=/dev/apex_0:/dev/apex_0"    # PCIe Coral
-        # "--device=/dev/bus/usb:/dev/bus/usb"  # USB Coral
       ];
     };
   };
