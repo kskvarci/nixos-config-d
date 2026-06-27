@@ -43,11 +43,13 @@
       config.nixos.modules.syncthing
       config.nixos.modules.miniflux
       config.nixos.modules.omada
-      config.nixos.modules.borgbackup
       config.nixos.modules.ssh
 
-      # Secrets (sops-nix — age-encrypted secrets for service credentials)
-      config.nixos.modules.secrets
+      # Requires sops — enable after secrets are configured
+      # config.nixos.modules.borgbackup
+
+      # Secrets (enable once sops is configured — see secrets/README)
+      # config.nixos.modules.secrets
 
       # Per-host hardware-configuration (filesystems, boot, kernel)
       ../../hosts/enix/hardware-configuration.nix
