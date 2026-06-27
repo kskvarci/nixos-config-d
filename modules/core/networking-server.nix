@@ -33,6 +33,7 @@
     # Firewall — open ports for all self-hosted services
     networking.firewall = {
       enable = true;
+      trustedInterfaces = [ "podman+" ];
       allowedTCPPorts = [
         22                         # SSH
         139 445                    # Samba
