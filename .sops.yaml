@@ -1,0 +1,10 @@
+# sops-nix configuration
+# Age keys are derived from host SSH ed25519 keys via ssh-to-age.
+keys:
+  - &enix age1s8k8f87jev805c7fqtc5472t9cm46j9mgv9n96qsmmtd8lxhd3vsnzvp6k
+
+creation_rules:
+  - path_regex: secrets/secrets\.yaml$
+    key_groups:
+      - age:
+          - *enix
