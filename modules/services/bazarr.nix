@@ -13,7 +13,7 @@
         "/data/d1/appdata/bazarr:/config"
         "/data/d2:/mnt/media"
       ];
-      extraOptions = ["--network=mynetwork" "--dns=9.9.9.9"];
+      extraOptions = ["--network=mynetwork"];
     };
 
     systemd.services."podman-bazarr" = {

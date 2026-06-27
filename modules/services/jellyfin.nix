@@ -21,7 +21,6 @@
       extraOptions = [
         "--device=/dev/dri:/dev/dri"
         "--network=mynetwork"
-        "--dns=9.9.9.9"
       ];
     };
 
