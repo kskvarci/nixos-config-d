@@ -21,7 +21,7 @@
     ];
 
     virtualisation.oci-containers.containers.mqtt5 = {
-      image = "eclipse-mosquitto:latest";
+      image = "docker.io/library/eclipse-mosquitto:latest";
       ports = [
         "1883:1883"
         "9001:9001"

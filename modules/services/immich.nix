@@ -36,12 +36,12 @@
     };
 
     virtualisation.oci-containers.containers.immich_redis = {
-      image = "valkey/valkey:8-bookworm";
+      image = "docker.io/valkey/valkey:8-bookworm";
       extraOptions = ["--network=immich" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.immich_postgres = {
-      image = "tensorchord/pgvecto-rs:pg14-v0.2.0";
+      image = "docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0";
       environment = {
         POSTGRES_USER = "postgres";
         POSTGRES_DB = "Pointy3345";

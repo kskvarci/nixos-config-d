@@ -2,7 +2,7 @@
 {
   nixos.modules.miniflux = {
     virtualisation.oci-containers.containers.miniflux-db = {
-      image = "postgres:15";
+      image = "docker.io/library/postgres:15";
       environment = {
         POSTGRES_DB = "miniflux";
         POSTGRES_USER = "miniflux";
@@ -15,7 +15,7 @@
     };
 
     virtualisation.oci-containers.containers.miniflux = {
-      image = "miniflux/miniflux:latest";
+      image = "docker.io/miniflux/miniflux:latest";
       ports = ["81:8080"];
       environment = {
         TZ = "America/New_York";

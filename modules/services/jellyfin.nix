@@ -2,7 +2,7 @@
 {
   nixos.modules.jellyfin = {
     virtualisation.oci-containers.containers.jellyfin = {
-      image = "linuxserver/jellyfin:latest";
+      image = "docker.io/linuxserver/jellyfin:latest";
       ports = [
         "8096:8096"
         "7359:7359/udp"

@@ -2,7 +2,7 @@
 {
   nixos.modules.media-downloads = {
     virtualisation.oci-containers.containers.vpn = {
-      image = "qmcgaw/gluetun:latest";
+      image = "docker.io/qmcgaw/gluetun:latest";
       environment = {
         VPN_SERVICE_PROVIDER = "protonvpn";
         VPN_TYPE = "wireguard";
@@ -66,7 +66,7 @@
     };
 
     virtualisation.oci-containers.containers.slskd = {
-      image = "slskd/slskd";
+      image = "docker.io/slskd/slskd:latest";
       environment = {
         SLSKD_REMOTE_CONFIGURATION = "true";
         TZ = "America/New_York";

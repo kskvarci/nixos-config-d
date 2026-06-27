@@ -2,7 +2,7 @@
 {
   nixos.modules.prowlarr = {
     virtualisation.oci-containers.containers.prowlarr = {
-      image = "linuxserver/prowlarr:latest";
+      image = "docker.io/linuxserver/prowlarr:latest";
       environment = {
         PUID = "1000";
         PGID = "1001";

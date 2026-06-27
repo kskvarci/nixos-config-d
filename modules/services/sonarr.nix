@@ -2,7 +2,7 @@
 {
   nixos.modules.sonarr = {
     virtualisation.oci-containers.containers.sonarr = {
-      image = "linuxserver/sonarr:latest";
+      image = "docker.io/linuxserver/sonarr:latest";
       ports = ["8989:8989"];
       environment = {
         PUID = "1000";

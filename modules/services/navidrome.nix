@@ -2,7 +2,7 @@
 {
   nixos.modules.navidrome = {
     virtualisation.oci-containers.containers.navidrome = {
-      image = "deluan/navidrome:latest";
+      image = "docker.io/deluan/navidrome:latest";
       ports = ["4533:4533"];
       environment = {
         TZ = "America/New_York";

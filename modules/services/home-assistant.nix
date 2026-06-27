@@ -19,7 +19,7 @@
     };
 
     virtualisation.oci-containers.containers.zwave-js-ui = {
-      image = "zwavejs/zwave-js-ui:latest";
+      image = "docker.io/zwavejs/zwave-js-ui:latest";
       environment = {
         TZ = "America/New_York";
       };

@@ -2,7 +2,7 @@
 {
   nixos.modules.omada = {
     virtualisation.oci-containers.containers.omada-controller = {
-      image = "mbentley/omada-controller:5.15";
+      image = "docker.io/mbentley/omada-controller:5.15";
       environment = {
         MANAGE_HTTP_PORT = "8088";
         MANAGE_HTTPS_PORT = "8043";
