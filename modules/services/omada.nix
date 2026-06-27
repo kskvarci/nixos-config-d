@@ -21,8 +21,8 @@
         TZ = "America/New_York";
       };
       volumes = [
-        "omada-data:/opt/tplink/EAPController/data"
-        "omada-logs:/opt/tplink/EAPController/logs"
+        "/data/d1/appdata/omada/data:/opt/tplink/EAPController/data"
+        "/data/d1/appdata/omada/logs:/opt/tplink/EAPController/logs"
       ];
       extraOptions = [
         "--network=host"
