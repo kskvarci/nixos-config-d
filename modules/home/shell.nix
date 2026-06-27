@@ -21,39 +21,29 @@
         '';
       };
       functions.nos = {
-        description = "Sync config bidirectionally, then switch";
+        description = "NixOS switch — local or remote via deploy-rs";
         body = ''
-          git -C $NH_FLAKE fetch
-          set behind (git -C $NH_FLAKE rev-list HEAD..@{u} --count)
-          if test $behind -gt 0
-            echo "↓ $behind new commit(s) — pulling"
-            git -C $NH_FLAKE pull --rebase
-            or return
-          end
-          git -C $NH_FLAKE diff --quiet HEAD
-          or begin
-            git -C $NH_FLAKE commit -am "config: update"
-            or return
-          end
-          nh os switch $argv
-          or return
-          set ahead (git -C $NH_FLAKE rev-list @{u}..HEAD --count)
-          if test $ahead -gt 0
-            echo "↑ $ahead commit(s) — pushing"
-            git -C $NH_FLAKE push
+          switch (count $argv)
+            case 0
+              # Local rebuild
+              nh os switch $NH_FLAKE
+            case '*'
+              # Remote deploy via deploy-rs
+              for target in $argv
+                switch $target
+                  case all
+                    deploy $NH_FLAKE
+                  case '*'
+                    deploy $NH_FLAKE"#$target"
+                end
+              end
           end
         '';
       };
       functions.nou = {
-        description = "Update flake inputs, switch, and push";
+        description = "Update flake inputs and switch locally";
         body = ''
-          nh os switch -u $argv
-          or return
-          git -C $NH_FLAKE diff --quiet flake.lock
-          and return
-          git -C $NH_FLAKE add flake.lock
-          and git -C $NH_FLAKE commit -m "flake: update inputs"
-          and git -C $NH_FLAKE push
+          nh os switch -u $NH_FLAKE $argv
         '';
       };
       functions.y = {
