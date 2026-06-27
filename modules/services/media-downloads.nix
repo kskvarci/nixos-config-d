@@ -36,7 +36,7 @@
       image = "lscr.io/linuxserver/qbittorrent:latest";
       environment = {
         PUID = "1000";
-        PGID = "1000";
+        PGID = "1001";
         TZ = "America/New_York";
         WEBUI_PORT = "5080";
       };
@@ -53,7 +53,7 @@
       image = "lscr.io/linuxserver/nzbget:latest";
       environment = {
         PUID = "1000";
-        PGID = "1000";
+        PGID = "1001";
         TZ = "America/New_York";
       };
       volumes = [
@@ -71,7 +71,7 @@
         SLSKD_REMOTE_CONFIGURATION = "true";
         TZ = "America/New_York";
       };
-      user = "1000:1000";
+      user = "1000:1001";
       volumes = [
         "/data/d1/appdata/slskd:/app"
         "/data/d1/music:/music"
@@ -98,7 +98,7 @@
       environment = {
         TZ = "America/New_York";
       };
-      user = "1000:1000";
+      user = "1000:1001";
       volumes = [
         "/data/d1/appdata/jellyseerr:/app/config"
       ];

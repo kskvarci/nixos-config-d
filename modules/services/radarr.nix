@@ -6,7 +6,7 @@
       ports = ["7878:7878"];
       environment = {
         PUID = "1000";
-        PGID = "1000";
+        PGID = "1001";
         TZ = "America/New_York";
       };
       volumes = [
