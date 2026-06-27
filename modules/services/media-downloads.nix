@@ -102,7 +102,7 @@
       volumes = [
         "/data/d1/appdata/jellyseerr:/app/config"
       ];
-      extraOptions = ["--network=mynetwork"];
+      extraOptions = ["--network=mynetwork" "--dns=9.9.9.9"];
     };
 
     systemd.services."podman-vpn" = {

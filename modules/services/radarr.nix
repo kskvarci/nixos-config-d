@@ -13,7 +13,7 @@
         "/data/d1/appdata/radarr:/config"
         "/data/d1:/data"
       ];
-      extraOptions = ["--network=mynetwork"];
+      extraOptions = ["--network=mynetwork" "--dns=9.9.9.9"];
     };
 
     systemd.services."podman-radarr" = {
