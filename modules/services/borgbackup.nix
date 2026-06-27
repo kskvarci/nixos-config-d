@@ -6,6 +6,7 @@
         "/data/d2/photos"
         "/data/d2/homevideo"
         "/data/d2/fileshare"
+        "/data/d1/appdata"
       ];
       repo = "/mnt/t5/borgrepo1";
       encryption = {
