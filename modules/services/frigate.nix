@@ -24,6 +24,7 @@
         "--device=/dev/dri:/dev/dri"
         "--device=/dev/apex_0:/dev/apex_0"
         "--mount=type=tmpfs,target=/tmp/cache,tmpfs-size=1000000000"
+        "--label=io.containers.autoupdate=registry"
       ];
     };
 

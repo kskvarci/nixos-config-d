@@ -21,6 +21,7 @@
       extraOptions = [
         "--device=/dev/dri:/dev/dri"
         "--network=mynetwork"
+        "--label=io.containers.autoupdate=registry"
       ];
     };
 

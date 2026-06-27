@@ -28,6 +28,7 @@
         "--cap-add=NET_ADMIN"
         "--device=/dev/net/tun:/dev/net/tun"
         "--network=media-downloads"
+        "--label=io.containers.autoupdate=registry"
       ];
     };
 
@@ -45,7 +46,7 @@
         "/data/d2/staging/tvshows/torrents:/data/staging/tvshows/torrents"
       ];
       dependsOn = ["vpn"];
-      extraOptions = ["--network=container:vpn"];
+      extraOptions = ["--network=container:vpn" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.nzbget = {
@@ -61,7 +62,7 @@
         "/data/d2/staging/tvshows/usenet:/data/staging/tvshows/usenet"
       ];
       dependsOn = ["vpn"];
-      extraOptions = ["--network=container:vpn"];
+      extraOptions = ["--network=container:vpn" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.slskd = {
@@ -78,7 +79,7 @@
         "/data/d1/musicdownloadsinc:/incomplete"
       ];
       dependsOn = ["vpn"];
-      extraOptions = ["--network=container:vpn"];
+      extraOptions = ["--network=container:vpn" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.flaresolverr = {
@@ -88,7 +89,7 @@
         TZ = "America/New_York";
       };
       dependsOn = ["vpn"];
-      extraOptions = ["--network=container:vpn"];
+      extraOptions = ["--network=container:vpn" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.jellyseerr = {
@@ -101,7 +102,7 @@
       volumes = [
         "/data/d1/appdata/jellyseerr:/app/config"
       ];
-      extraOptions = ["--network=mynetwork"];
+      extraOptions = ["--network=mynetwork" "--label=io.containers.autoupdate=registry"];
     };
 
     systemd.services."podman-vpn" = {

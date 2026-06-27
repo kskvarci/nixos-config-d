@@ -14,6 +14,7 @@
         "--network=host"
         "--device=/dev/zigbee:/dev/zigbee"
         "--mount=type=bind,src=/run/dbus,dst=/run/dbus,ro"
+        "--label=io.containers.autoupdate=registry"
       ];
     };
 
@@ -28,6 +29,7 @@
       extraOptions = [
         "--network=host"
         "--device=/dev/zwave:/dev/zwave"
+        "--label=io.containers.autoupdate=registry"
       ];
     };
   };

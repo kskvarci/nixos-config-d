@@ -13,7 +13,7 @@
         "/data/d1/appdata/sonarr:/config"
         "/data/d2:/data"
       ];
-      extraOptions = ["--network=mynetwork"];
+      extraOptions = ["--network=mynetwork" "--label=io.containers.autoupdate=registry"];
     };
 
     systemd.services."podman-sonarr" = {

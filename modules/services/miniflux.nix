@@ -11,7 +11,7 @@
       volumes = [
         "/data/d1/appdata/miniflux-db:/var/lib/postgresql/data"
       ];
-      extraOptions = ["--network=miniflux"];
+      extraOptions = ["--network=miniflux" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.miniflux = {
@@ -26,7 +26,7 @@
       };
       environmentFiles = ["/run/secrets/miniflux-env"];
       dependsOn = ["miniflux-db"];
-      extraOptions = ["--network=miniflux"];
+      extraOptions = ["--network=miniflux" "--label=io.containers.autoupdate=registry"];
     };
 
     systemd.services."podman-miniflux-db" = {

@@ -28,6 +28,7 @@
         "--network=host"
         "--ulimit=nofile=4096:8192"
         "--stop-timeout=60"
+        "--label=io.containers.autoupdate=registry"
       ];
     };
   };

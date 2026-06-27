@@ -31,6 +31,7 @@
         "/data/d1/appdata/mosquitto/data:/mosquitto/data"
         "/data/d1/appdata/mosquitto/log:/mosquitto/log"
       ];
+      extraOptions = ["--label=io.containers.autoupdate=registry"];
     };
   };
 }

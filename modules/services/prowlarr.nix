@@ -12,7 +12,7 @@
         "/data/d1/appdata/prowlarr:/config"
       ];
       dependsOn = ["vpn"];
-      extraOptions = ["--network=container:vpn"];
+      extraOptions = ["--network=container:vpn" "--label=io.containers.autoupdate=registry"];
     };
   };
 }

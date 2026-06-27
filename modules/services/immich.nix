@@ -23,7 +23,7 @@
         "immich_postgres"
         "immich_machine_learning"
       ];
-      extraOptions = ["--network=immich"];
+      extraOptions = ["--network=immich" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.immich_machine_learning = {
@@ -32,12 +32,12 @@
       environment = {
         TZ = "America/New_York";
       };
-      extraOptions = ["--network=immich"];
+      extraOptions = ["--network=immich" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.immich_redis = {
       image = "valkey/valkey:8-bookworm";
-      extraOptions = ["--network=immich"];
+      extraOptions = ["--network=immich" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.immich_postgres = {
@@ -66,7 +66,7 @@
         "-c"
         "wal_compression=on"
       ];
-      extraOptions = ["--network=immich"];
+      extraOptions = ["--network=immich" "--label=io.containers.autoupdate=registry"];
     };
 
     systemd.services."podman-immich_server" = {

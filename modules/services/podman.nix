@@ -26,6 +26,23 @@
 
     virtualisation.oci-containers.backend = "podman";
 
+    # Enable podman auto-update timer to check for newer images daily
+    systemd.timers.podman-auto-update = {
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnCalendar = "daily";
+        Persistent = true;
+        RandomizedDelaySec = "900";
+      };
+    };
+    systemd.services.podman-auto-update = {
+      description = "Podman auto-update containers";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.podman}/bin/podman auto-update";
+      };
+    };
+
     systemd.services.create-mynetwork = mkPodmanNetwork "mynetwork";
     systemd.services.create-media-downloads-network = mkPodmanNetwork "media-downloads";
     systemd.services.create-miniflux-network = mkPodmanNetwork "miniflux";

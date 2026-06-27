@@ -18,6 +18,7 @@
         "/data/d1/appdata/syncthing:/config"
         "/data/d1/music:/data/music"
       ];
+      extraOptions = ["--label=io.containers.autoupdate=registry"];
     };
   };
 }

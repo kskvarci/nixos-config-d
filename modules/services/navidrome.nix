@@ -15,6 +15,7 @@
         "/data/d1/appdata/navidrome:/data"
         "/data/d1/music:/music:ro"
       ];
+      extraOptions = ["--label=io.containers.autoupdate=registry"];
     };
   };
 }
