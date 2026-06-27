@@ -38,6 +38,9 @@
       options = [ "nofail" ];
     };
 
-    swapDevices = [ { device = "/swap.img"; } ];
+    # No swap file on fresh install — create one later if needed:
+    #   dd if=/dev/zero of=/swap.img bs=1M count=8192
+    #   chmod 600 /swap.img && mkswap /swap.img
+    # swapDevices = [ { device = "/swap.img"; } ];
   };
 }

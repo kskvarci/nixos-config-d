@@ -6,6 +6,8 @@
 {
   nixos.modules.server-shell = { pkgs, ... }: {
     environment.systemPackages = with pkgs; [
+      # Terminal support (Kitty terminfo for SSH sessions)
+      kitty.terminfo
       # Editors
       neovim
 
