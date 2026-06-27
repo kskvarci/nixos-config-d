@@ -68,6 +68,7 @@
         7359                       # Jellyfin discovery
         8555                       # Frigate WebRTC
         21027 22000                # Syncthing
+        27001 29810                # Omada app discovery
       ];
     };
 
