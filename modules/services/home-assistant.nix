@@ -19,17 +19,16 @@
 
     virtualisation.oci-containers.containers.zwave-js-ui = {
       image = "zwavejs/zwave-js-ui:latest";
-      ports = [
-        "3000:3000"
-        "8091:8091"
-      ];
       environment = {
         TZ = "America/New_York";
       };
       volumes = [
         "/data/d1/appdata/zwave-js-ui:/usr/src/app/store"
       ];
-      extraOptions = ["--device=/dev/zwave:/dev/zwave"];
+      extraOptions = [
+        "--network=host"
+        "--device=/dev/zwave:/dev/zwave"
+      ];
     };
   };
 }
