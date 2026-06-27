@@ -9,7 +9,7 @@
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = "${pkgs.runtimeShell} -lc '${pkgs.podman}/bin/podman network exists ${name} || ${pkgs.podman}/bin/podman network create ${name}'";
+        ExecStart = "${pkgs.runtimeShell} -lc '${pkgs.podman}/bin/podman network exists ${name} || ${pkgs.podman}/bin/podman network create --dns-enabled ${name}'";
       };
     };
   in {
