@@ -11,8 +11,9 @@
         "8971:8971"
       ];
       environment = {
-        FRIGATE_RTSP_PASSWORD = "CHANGE_ME"; # TODO: source from sops-nix.
+        TZ = "America/New_York";
       };
+      environmentFiles = ["/run/secrets/frigate-env"];
       volumes = [
         "/data/d1/appdata/frigate:/config"
         "/data/d2/frigate:/media/frigate"
@@ -24,6 +25,10 @@
         "--device=/dev/apex_0:/dev/apex_0"
         "--mount=type=tmpfs,target=/tmp/cache,tmpfs-size=1000000000"
       ];
+    };
+
+    sops.secrets.frigate-env = {
+      sopsFile = ../../secrets/secrets.yaml;
     };
   };
 }

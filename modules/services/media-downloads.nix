@@ -6,14 +6,13 @@
       environment = {
         VPN_SERVICE_PROVIDER = "protonvpn";
         VPN_TYPE = "wireguard";
-        WIREGUARD_PRIVATE_KEY = "IGi2GdZ1WqegRSO7F37FmcCjfJwLYBd2x1sDwp1wS34="; # TODO: move to sops-nix
-        WIREGUARD_ADDRESSES = "10.2.0.2/32"; # TODO: move to sops-nix
         SERVER_COUNTRIES = "Netherlands";
         TZ = "America/New_York";
         DOT = "off";
         DNS_ADDRESS = "9.9.9.9";
         IPV6 = "off";
       };
+      environmentFiles = ["/run/secrets/gluetun-env"];
       ports = [
         "5030:5030"
         "5031:5031"
@@ -113,6 +112,10 @@
     systemd.services."podman-jellyseerr" = {
       after = ["create-mynetwork.service"];
       wants = ["create-mynetwork.service"];
+    };
+
+    sops.secrets.gluetun-env = {
+      sopsFile = ../../secrets/secrets.yaml;
     };
   };
 }

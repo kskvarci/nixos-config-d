@@ -7,12 +7,12 @@
       environment = {
         DB_HOSTNAME = "immich_postgres";
         DB_USERNAME = "postgres";
-        DB_PASSWORD = "CHANGE_ME"; # TODO: source from sops-nix.
         DB_DATABASE_NAME = "Pointy3345";
         REDIS_HOSTNAME = "immich_redis";
         IMMICH_MACHINE_LEARNING_URL = "http://immich_machine_learning:3003";
         TZ = "America/New_York";
       };
+      environmentFiles = ["/run/secrets/immich-env"];
       volumes = [
         "/data/d2/immich_upload:/usr/src/app/upload"
         "/data/d2/photos:/data/d2/photos:ro"
@@ -43,11 +43,11 @@
     virtualisation.oci-containers.containers.immich_postgres = {
       image = "tensorchord/pgvecto-rs:pg14-v0.2.0";
       environment = {
-        POSTGRES_PASSWORD = "CHANGE_ME"; # TODO: source from sops-nix.
         POSTGRES_USER = "postgres";
         POSTGRES_DB = "Pointy3345";
         POSTGRES_INITDB_ARGS = "--data-checksums";
       };
+      environmentFiles = ["/run/secrets/immich-db-env"];
       volumes = [
         "/data/d1/appdata/immich/postgres:/var/lib/postgresql/data"
       ];
@@ -87,6 +87,13 @@
     systemd.services."podman-immich_postgres" = {
       after = ["create-immich-network.service"];
       wants = ["create-immich-network.service"];
+    };
+
+    sops.secrets.immich-env = {
+      sopsFile = ../../secrets/secrets.yaml;
+    };
+    sops.secrets.immich-db-env = {
+      sopsFile = ../../secrets/secrets.yaml;
     };
   };
 }
