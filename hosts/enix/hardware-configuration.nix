@@ -25,9 +25,8 @@
 
   # USB device rules: HubZ Z-Wave/Zigbee controller (Silicon Labs cp210x)
   services.udev.extraRules = ''
-    # HubZ Smart Home Controller - Z-Wave (port 0) and Zigbee (port 1)
-    SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="8a2a", ATTRS{bInterfaceNumber}=="00", SYMLINK+="zwave", MODE="0660", GROUP="dialout"
-    SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="8a2a", ATTRS{bInterfaceNumber}=="01", SYMLINK+="zigbee", MODE="0660", GROUP="dialout"
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="8a2a", ENV{ID_USB_INTERFACE_NUM}=="00", SYMLINK+="zwave", MODE="0660", GROUP="dialout"
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="8a2a", ENV{ID_USB_INTERFACE_NUM}=="01", SYMLINK+="zigbee", MODE="0660", GROUP="dialout"
   '';
 
   # Thunderbolt
