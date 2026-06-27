@@ -13,6 +13,7 @@
 
       # Core tools
       gh
+      sops
       curl
       wget
       jq
