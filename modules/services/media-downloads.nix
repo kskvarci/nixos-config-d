@@ -6,8 +6,8 @@
       environment = {
         VPN_SERVICE_PROVIDER = "protonvpn";
         VPN_TYPE = "wireguard";
-        WIREGUARD_PRIVATE_KEY = "CHANGE_ME"; # TODO: source from sops-nix.
-        WIREGUARD_ADDRESSES = "CHANGE_ME"; # TODO: source from sops-nix.
+        WIREGUARD_PRIVATE_KEY = "IGi2GdZ1WqegRSO7F37FmcCjfJwLYBd2x1sDwp1wS34="; # TODO: move to sops-nix
+        WIREGUARD_ADDRESSES = "10.2.0.2/32"; # TODO: move to sops-nix
         SERVER_COUNTRIES = "Netherlands";
         TZ = "America/New_York";
         DOT = "off";
