@@ -16,7 +16,7 @@
       };
       volumes = [
         "/data/d1/appdata/syncthing:/config"
-        "/data/d1/syncthing:/data1"
+        "/data/d1/music:/data/music"
       ];
     };
   };
