@@ -25,6 +25,7 @@ in
     enix = {
       hostname = "192.168.1.34";
       sshUser = "kskvarci";
+      remoteBuild = true;
       profiles.system = {
         user = "root";
         path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos
@@ -45,6 +46,7 @@ in
     onix = {
       hostname = "onix";
       sshUser = "kskvarci";
+      remoteBuild = true;
       profiles.system = {
         user = "root";
         path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos
