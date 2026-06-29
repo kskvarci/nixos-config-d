@@ -31,6 +31,7 @@
       config.nixos.modules.bazarr
       config.nixos.modules.prowlarr
       config.nixos.modules.navidrome
+      config.nixos.modules.immich
       config.nixos.modules.media-downloads
 
       # Services — home automation
