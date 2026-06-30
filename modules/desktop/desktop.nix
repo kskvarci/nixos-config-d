@@ -47,6 +47,7 @@
     environment.systemPackages = with pkgs; [
       fuzzel
       wl-clipboard
+      xwayland-satellite
     ];
   };
 }
