@@ -21,6 +21,7 @@
       config.nixos.modules.desktop
       config.nixos.modules.niri-overlay
       config.nixos.modules.easyeffects
+      config.nixos.modules.steam
 
       # Work tools
       config.nixos.modules.himmelblau
