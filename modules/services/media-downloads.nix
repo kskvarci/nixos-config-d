@@ -11,7 +11,6 @@
         DOT = "off";
         DNS_ADDRESS = "9.9.9.9";
         IPV6 = "off";
-        FIREWALL_OUTBOUND_SUBNETS = "192.168.1.0/24";
       };
       environmentFiles = ["/run/secrets/gluetun-env"];
       ports = [
@@ -21,8 +20,6 @@
         "6789:6789"
         "6881:6881"
         "6881:6881/udp"
-        "8191:8191"
-        "9696:9696"
         "50300:50300"
       ];
       extraOptions = [
@@ -85,12 +82,12 @@
 
     virtualisation.oci-containers.containers.flaresolverr = {
       image = "ghcr.io/flaresolverr/flaresolverr:latest";
+      ports = ["8191:8191"];
       environment = {
         LOG_LEVEL = "info";
         TZ = "America/New_York";
       };
-      dependsOn = ["vpn"];
-      extraOptions = ["--network=container:vpn" "--label=io.containers.autoupdate=registry"];
+      extraOptions = ["--network=mynetwork" "--label=io.containers.autoupdate=registry"];
     };
 
     virtualisation.oci-containers.containers.jellyseerr = {
@@ -112,6 +109,11 @@
     };
 
     systemd.services."podman-jellyseerr" = {
+      after = ["create-mynetwork.service"];
+      wants = ["create-mynetwork.service"];
+    };
+
+    systemd.services."podman-flaresolverr" = {
       after = ["create-mynetwork.service"];
       wants = ["create-mynetwork.service"];
     };
