@@ -11,6 +11,12 @@
         DOT = "off";
         DNS_ADDRESS = "9.9.9.9";
         IPV6 = "off";
+        # Let the arr apps on other podman networks (and the LAN) reach the
+        # download-client web UIs published on this container. Gluetun's
+        # killswitch firewall only trusts its own subnet by default and drops
+        # cross-subnet connections otherwise. Scoped to private ranges, so it
+        # does not affect VPN privacy for outbound internet traffic.
+        FIREWALL_OUTBOUND_SUBNETS = "10.89.0.0/16,192.168.1.0/24";
       };
       environmentFiles = ["/run/secrets/gluetun-env"];
       ports = [
