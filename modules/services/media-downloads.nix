@@ -11,6 +11,7 @@
         DOT = "off";
         DNS_ADDRESS = "9.9.9.9";
         IPV6 = "off";
+        FIREWALL_OUTBOUND_SUBNETS = "192.168.1.0/24";
       };
       environmentFiles = ["/run/secrets/gluetun-env"];
       ports = [
