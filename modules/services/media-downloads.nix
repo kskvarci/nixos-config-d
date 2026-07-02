@@ -32,6 +32,7 @@
         "--cap-add=NET_ADMIN"
         "--device=/dev/net/tun:/dev/net/tun"
         "--network=media-downloads"
+        "--network=mynetwork"
         "--label=io.containers.autoupdate=registry"
       ];
     };
@@ -110,8 +111,8 @@
     };
 
     systemd.services."podman-vpn" = {
-      after = ["create-media-downloads-network.service"];
-      wants = ["create-media-downloads-network.service"];
+      after = ["create-media-downloads-network.service" "create-mynetwork.service"];
+      wants = ["create-media-downloads-network.service" "create-mynetwork.service"];
     };
 
     systemd.services."podman-jellyseerr" = {
